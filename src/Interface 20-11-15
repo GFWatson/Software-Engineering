@@ -3,12 +3,10 @@ import java.io.*;
 public class Interface implements Runnable{
 	
 	String userIn;
-	String serverOut;
 	boolean loggedIn = false;
 	String currentUser;
 	int secretID;
-	string inputSecretID;
-	string companyName;
+	//string inputSecretID;
 	
 	public Interface()
 	{
@@ -21,11 +19,10 @@ public class Interface implements Runnable{
 		{
 			BufferedReader stdIn = new BufferedReader(new InputStreamReader(System.in));
 			userIn = stdIn.readLine().toUpperCase();
-			serverOut = ReceiveMessages.inputText;
 			
 			if(loggedIn == false)
 			{
-				login(stdIn);
+-				regi(stdIn);
 			}
 			else
 			{
@@ -34,39 +31,52 @@ public class Interface implements Runnable{
 			
 			if(userIn == "BUY")
 			{
-				
+				/*
 				System.out.println("Please enter your secret ID: ");
 				inputSecretID = reader.readLine().toUpperCase();
 				secretID = Integer.valueOf(inputSecretID);
+				*/
 				
+-				System.out.println("Enter the company name: ");
+-				string companyName = reader.readLine().toUpperCase();
 				
-				System.out.println("Enter the company name: ");
-				companyName = reader.readLine().toUpperCase();
+-				if(companyName == "MICROSOFT")
+-				{
+-					companyName = "Microsoft";
+-				}
+-				else if(companyName == "GOOGLE")
+-				{
+-					companyName = "Google";
+-				}
+-				//the other companies need adding
+-				//and then this needs adding to the sell function
 				
+-				System.out.println("Enter number of shares: ");
+-				string numberOfShares = reader.readLine().toUpperCase();
+				//shareNumber = Integer.valueOf(inputSecretID);
 				
-				System.out.println("Enter number of shares: ");
-				numberOfShares = reader.readLine().toUpperCase();
-				shareNumber = Integer.valueOf(inputSecretID);
+-				SendMessages.userInput = "UDP:" + companyName + ":" + numberofShares + ":" + secretID;
 				 
 
 			}
 			
 			else if(userIn == "SELL")
 			{
+				/*
 				System.out.println("Please enter your secret ID: ");
 				inputSecretID = reader.readLine().toUpperCase();
 				secretID = Integer.valueOf(inputSecretID);
+				*/
+				
+-				System.out.println("Enter the company name: ");
+-				string companyName = reader.readLine().toUpperCase();
 				
 				
-				System.out.println("Enter the company name: ");
-				companyName = reader.readLine().toUpperCase();
+-				System.out.println("Enter number of shares: ");
+-				string numberOfShares = reader.readLine().toUpperCase();
+				//shareNumber = Integer.valueOf(inputSecretID);
 				
-				
-				System.out.println("Enter number of shares: ");
-				numberOfShares = reader.readLine().toUpperCase();
-				shareNumber = Integer.valueOf(inputSecretID);
-				
-				//sell();
+-				SendMessages.userInput = "UDP:" + companyName + ":" + numberofShares + ":" + secretID;
 			}
 			//will become a switch case for all actions
 			
@@ -151,25 +161,30 @@ public class Interface implements Runnable{
 	{
 		String accountName;
 		String password;
-		int regiID; 
-		int secretID;
 		
-					System.out.println("Enter your Name: ");
-					accountName = reader.readLine().toUpperCase();
-					
-					System.out.println("Enter a secure password for ID: ");
-					password = reader.readLine().toUpperCase();
+		System.out.println("Enter your Name: ");
+		accountName = reader.readLine().toUpperCase();
+			
+		System.out.println("Enter a secure password for ID: ");
+		password = reader.readLine().toUpperCase();
+		
+		
+-		SendMessages.userInput = "REGI";
+-		secretID = ReceiveMessages.inputText;
 
+-		loggedIn = true;
+
+		/*
+		Random ran = new Random();
+		int x = ran.nextInt(6) + 5;
+		regiID = ran; 
 					
-					Random ran = new Random();
-					int x = ran.nextInt(6) + 5;
-					regiID = ran; 
+		System.out.println("Your Registration ID is: ");
+			
+		Random ran = new Random();
+		int x = ran.nextInt(6) + 5;
+		regiID = ran; 
 					
-					System.out.println("Your Registration ID is: ");
-					
-					Random ran = new Random();
-					int x = ran.nextInt(6) + 5;
-					regiID = ran; 
-					
-					System.out.println("Your Secret ID to use the server is: ");	
+		System.out.println("Your Secret ID to use the server is: ");
+		*/
 	}
