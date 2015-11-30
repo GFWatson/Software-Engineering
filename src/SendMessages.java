@@ -5,29 +5,39 @@ public class SendMessages implements Runnable{
 	
 	Socket clientSocket;
 	PrintWriter out;
-	static String userInput;
+	String userInput;
 	
 	public SendMessages(Socket aSocket)
 	{
 		clientSocket = aSocket;
+		try
+		{
+			out = new PrintWriter(clientSocket.getOutputStream(), true);
+		}
+		catch (IOException e)
+		{
+			e.printStackTrace();
+		}
+
+	}
+	
+	public void sendMessage()
+	{	
+		out.println(userInput);
+
 	}
 	
 	public void run()
 	{
-
-		try
+		while(true)
 		{
-			out = new PrintWriter(clientSocket.getOutputStream(), true);
-
-			while (userInput != null)
-			{
-				out.println(userInput);
-			}	
+			sendMessage();
 		}
-		catch (IOException e)
-		{
-			System.out.println("An error happened: " + e);
-		}
+	}
+	
+	public void setText(String newInput)
+	{
+		userInput = newInput;
 	}
 	
 }

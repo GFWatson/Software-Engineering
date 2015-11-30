@@ -6,18 +6,17 @@ public class ReceiveMessages implements Runnable
 	
 	Socket clientSocket;
 	BufferedReader in;
-	static String inputText;
+	String inputText;
 	
 	public ReceiveMessages(Socket aSocket)
 	{
-		clientSocket = aSocket;
+
 	}	
 	
-	public void run()
+	public void receiveMessage()
 	{
 		try
 		{
-			in = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
 			 
 			while((inputText = in.readLine()) != null)
 			{
@@ -29,5 +28,18 @@ public class ReceiveMessages implements Runnable
 			System.out.println("An error happened: " + e);
 		}	
 	}
+
+	public void run()
+	{
+		while(true)
+		{
+			receiveMessage();
+			
+		}
+	}
 	
+	public String getText()
+	{
+		return inputText;
+	}
 }

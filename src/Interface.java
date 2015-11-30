@@ -3,43 +3,62 @@ import java.io.*;
 public class Interface implements Runnable{
 	
 	String userIn;
+	String userInfo;
 	String serverOut;
 	boolean loggedIn = false;
 	String currentUser;
+	String secretID;
+	ReceiveMessages rM;
+	SendMessages sM;
 	
-	public Interface()
+	public Interface(ReceiveMessages myRM, SendMessages mySM)
 	{
-		
+		rM = myRM;
+		sM = mySM;
 	}
 	
 	public void run()
 	{
+		getInput();
+		
+	}
+	
+	private void getInput()
+	{
 		try
 		{
 			BufferedReader stdIn = new BufferedReader(new InputStreamReader(System.in));
-			userIn = stdIn.readLine().toUpperCase();
-			serverOut = ReceiveMessages.inputText;
 			
+			
+			while(true)
+			{
 			if(loggedIn == false)
 			{
-				register(stdIn);
+			regi(stdIn);
+				
 			}
 			else
 			{
 				System.out.println("What would you like to do?");
 			}
 			
-			if(userIn == "BUY")
+			userIn = stdIn.readLine().toUpperCase();
+			
+			if(userIn.equals("BUY"))
 			{
-				//buy();
+				buy(stdIn);
 			}
-			else if(userIn == "SELL")
+			
+			else if(userIn.equals("SELL"))
 			{
-				//sell();
+				sell(stdIn);
 			}
 			//will become a switch case for all actions
 			
 			
+		
+			}
+			
 		}
 		catch(IOException e)
 		{
@@ -47,49 +66,110 @@ public class Interface implements Runnable{
 		}
 	}
 	
-	private void register(BufferedReader reader)
+	private void regi(BufferedReader reader)
 	{
-		String accountNum;
+		String accountName;
 		String password;
 		
 		try
 		{
-			do
-			{
-			System.out.println("Please enter your account number: ");
-			accountNum = reader.readLine().toUpperCase();
-			//check to see if there's an account for that number
-			//if there is:
-				do
-				{
-					System.out.println("Please enter the account password: ");
-					password = reader.readLine().toUpperCase();
-					//check to see if password matches account
-					//if not, password = "wrong"
-				}
-				while(password != "wrong");
-			//if not:
-				//System.out.println("There is no account for that number. Would you like to register?");
-				//userIn = reader.readLine().toUpperCase();
-				//if(userIn == "YES")
-					//System.out.println("Please enter a password: ");
-					//password = reader.readLine().toUpperCase();
-					//create account using accountNum and password
-			//else accountNum = "wrong";
-			}
-			while(accountNum != "wrong");
+		System.out.println("Enter your Name: \n");
+		accountName = reader.readLine().toUpperCase();
 			
-			//get unique code for account
-			//currentUser = uniqueCode
-			loggedIn = true;
-			
+		System.out.println("Enter a secure password for ID: \n");
+		password = reader.readLine().toUpperCase();
+		}
+		catch(IOException e)
+		{
+			System.out.println("There has been an error: " + e);
+
+		}
+		
+		sM.setText("REGI");
+		
+		secretID = rM.getText();
+
+		loggedIn = true;
+
+	}
+	
+	private void buy(BufferedReader stdIn)
+	{
+		String companyName = "";
+		try
+		{
+		System.out.println("Enter the company name: ");
+		companyName = stdIn.readLine().toUpperCase();
 		}
 		catch(IOException e)
 		{
 			System.out.println("There has been an error: " + e);
 		}
+		
+		if(companyName.equals("MICROSOFT"))
+		{
+			companyName = "Microsoft";
+		}
+		else if(companyName.equals("GOOGLE"))
+		{
+			companyName = "Google";
+		}
+		//the other companies need adding
+		//and then this needs adding to the sell function
+		String numberOfShares = "";
+		try
+		{
+		System.out.println("Enter number of shares: ");
+		numberOfShares = stdIn.readLine().toUpperCase();
+		//shareNumber = Integer.valueOf(inputSecretID);
+		}
+		catch(IOException e)
+		{
+			System.out.println("There has been an error: " + e);
+		}
+		
+		sM.setText("BUY:" + companyName + ":" + numberOfShares + ":" + secretID);
+		System.out.println(rM.getText());
 	}
 	
-	
-	
+	private void sell(BufferedReader stdIn)
+	{
+		String companyName = "";
+		try
+		{
+		System.out.println("Enter the company name: ");
+		companyName = stdIn.readLine().toUpperCase();
+		}
+		catch(IOException e)
+		{
+			System.out.println("There has been an error: " + e);
+		}
+		
+		if(companyName == "MICROSOFT")
+		{
+			companyName = "Microsoft";
+		}
+		else if(companyName == "GOOGLE")
+		{
+			companyName = "Google";
+		}
+		//the other companies need adding
+		//and then this needs adding to the sell function
+		String numberOfShares = "";
+		try
+		{
+		System.out.println("Enter number of shares: ");
+		numberOfShares = stdIn.readLine().toUpperCase();
+		}
+		catch(IOException e)
+		{
+			System.out.println("There has been an error: " + e);
+		}
+		
+		sM.setText("SELL:" + companyName + ":" + numberOfShares + ":" + secretID);
+		System.out.println(rM.getText());
+
+	}
 }
+	
+

@@ -5,15 +5,25 @@ public class ServerConnection
 {
 
 	public static void main(String[] args)
-		{
+	{
+		ServerConnection myServerConnection = new ServerConnection();
+		myServerConnection.initialiseThreads();
+	}
 	
+	public void initialiseThreads()
+	{
+
 		try{
 		
 			Socket clientSocket = new Socket("192.168.0.48", 5000);
 			
-			Thread t1 = new Thread(new ReceiveMessages(clientSocket));
-			Thread t2 = new Thread(new SendMessages(clientSocket));
-			Thread t3 = new Thread(new Interface());
+			ReceiveMessages myRM = new ReceiveMessages(clientSocket);
+			SendMessages mySM = new SendMessages(clientSocket);
+			Interface myInterface = new Interface(myRM, mySM);
+			
+			Thread t1 = new Thread(myRM);
+			Thread t2 = new Thread(mySM);
+			Thread t3 = new Thread(myInterface);
 
 			t1.start();
 			t2.start();
@@ -26,7 +36,5 @@ public class ServerConnection
 		{
 			System.out.println(e);
 		}
-		
 	}
-	
 }
