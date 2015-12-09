@@ -86,8 +86,10 @@ public class Interface implements Runnable{
 		}
 		
 		sM.setText("REGI");
+		System.out.println("should have sent regi!");
 		
 		secretID = rM.getText();
+		sM.setText("");
 
 		loggedIn = true;
 

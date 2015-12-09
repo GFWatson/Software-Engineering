@@ -5,7 +5,8 @@ public class SendMessages implements Runnable{
 	
 	Socket clientSocket;
 	PrintWriter out;
-	String userInput;
+	public String userInput ="1";
+	
 	
 	public SendMessages(Socket aSocket)
 	{
@@ -24,20 +25,20 @@ public class SendMessages implements Runnable{
 	public void sendMessage()
 	{	
 		out.println(userInput);
-
 	}
 	
 	public void run()
 	{
-		while(true)
-		{
-			sendMessage();
-		}
+
+				sendMessage();
+
 	}
 	
 	public void setText(String newInput)
 	{
 		userInput = newInput;
+		run();
+		
 	}
 	
 }

@@ -6,11 +6,19 @@ public class ReceiveMessages implements Runnable
 	
 	Socket clientSocket;
 	BufferedReader in;
-	String inputText;
+	public String inputText;
 	
 	public ReceiveMessages(Socket aSocket)
 	{
-
+		clientSocket = aSocket;
+		try
+		{
+			in = new BufferedReader(new InputStreamReader(aSocket.getInputStream()));
+		}
+		catch (IOException e)
+		{
+			e.printStackTrace();
+		}
 	}	
 	
 	public void receiveMessage()
