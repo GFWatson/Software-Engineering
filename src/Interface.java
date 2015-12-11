@@ -12,8 +12,8 @@ public class Interface implements Runnable{
 	SendMessages sM;
 	String ActualID;
 	String companyName;
-	String numberOfSharesB;
-	String numberOfSharesS;
+	String numberOfShares;
+	Account myAccount;
 
 	
 	public Interface(ReceiveMessages myRM, SendMessages mySM)
@@ -74,33 +74,26 @@ public class Interface implements Runnable{
 	
 	private void regi(BufferedReader reader)
 	{
-		String accountName;
-		String password;
+		String accountName = "";
 		
 		try
 		{
-		System.out.println("Enter your Name: \n");
+		System.out.println("You must create an account.");
+		System.out.println("Enter your Name:");
 		accountName = reader.readLine().toUpperCase();
-			
-		System.out.println("Enter a secure password for ID: \n");
-		password = reader.readLine().toUpperCase();
+		System.out.println("You have a balance of £5000");
 		}
 		catch(IOException e)
 		{
 			System.out.println("There has been an error: " + e);
 		}
 		
-		sM.setText("REGI");
-		System.out.println("should have sent regi!");
-		
-		
-		secretID = rM.getText();
-		
+		sM.setText("REGI");				
 		sM.setText("");
 		rM.getText();		
 		 ActualID = rM.getrID().substring(Math.max(rM.getrID().length() - 5, 0));
 		System.out.println("Your Secret ID is: " + ActualID);
-
+		myAccount = new Account(accountName, 5000.0);
 		loggedIn = true;
 		
 	}
@@ -130,21 +123,33 @@ public class Interface implements Runnable{
 		try
 		{
 		System.out.println("Enter number of shares: ");
-		numberOfSharesB = stdIn.readLine().toUpperCase();
+		numberOfShares = stdIn.readLine().toUpperCase();
 		}
 		catch(IOException e)
 		{
 			System.out.println("There has been an error: " + e);
 		}
 		
-		sM.setText("BUY:" + companyName + ":" + numberOfSharesB + ":" + ActualID);
-		System.out.println(rM.getText());
+		sM.setText("BUY:" + companyName + ":" + numberOfShares + ":" + ActualID);
+		System.out.println("Please enter \"Y\" if transaction was successful:");
 		
-		if(rM.getText().toString() != "")
+		try
 		{
-		String purchasePrice = rM.getText().toString();
-		System.out.println("You purchased at this rate: " + purchasePrice);
+			String input = stdIn.readLine().toUpperCase();
+			if(input.equals("Y"))
+			{
+				System.out.println("Please enter the price you bought the share for:");
+				String price = stdIn.readLine().toUpperCase();
+				int num = Integer.parseInt(numberOfShares);
+				double pri = Double.parseDouble(price);
+				myAccount.buy(companyName, num, pri);
+			}
 		}
+		catch (IOException e)
+		{
+			e.printStackTrace();
+		}
+		
 	}
 	
 	private void sell(BufferedReader stdIn)
@@ -172,23 +177,42 @@ public class Interface implements Runnable{
 		try
 		{
 		System.out.println("Enter number of shares: ");
-		numberOfSharesS = stdIn.readLine().toUpperCase();
+		numberOfShares = stdIn.readLine().toUpperCase();
 		}
 		catch(IOException e)
 		{
 			System.out.println("There has been an error: " + e);
 		}
 		
-		sM.setText("SELL:" + companyName + ":" + numberOfSharesS + ":" + ActualID);
-		System.out.println(rM.getText());
+		sM.setText("SELL:" + companyName + ":" + numberOfShares + ":" + ActualID);
+		System.out.println("Please enter \"Y\" if transaction was successful:");
+		
+		try
+		{
+			String input = stdIn.readLine().toUpperCase();
+			if(input.equals("Y"))
+			{
+				System.out.println("Please enter how much you made in this sale:");
+				String price = stdIn.readLine().toUpperCase();
+				int num = Integer.parseInt(numberOfShares);
+				double pri = Double.parseDouble(price);
+				myAccount.sell(companyName, num, pri);
+			}
+		}
+		catch (IOException e)
+		{
+			e.printStackTrace();
+		}
 	}
 	
 	private void disp(BufferedReader stdIn)
 	{
-		System.out.println("ID: " + ActualID);
-		System.out.println("Company: " + companyName);
-		System.out.println("Shares bought: " + numberOfSharesB);
-		System.out.println("Shares sold: " + numberOfSharesS);
+		myAccount.display();
+	}
+	
+	public void setOut(String somet)
+	{
+		serverOut = somet;
 	}
 }
 	

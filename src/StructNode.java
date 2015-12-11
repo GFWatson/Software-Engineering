@@ -3,10 +3,10 @@ public class StructNode {
 	
 	public String company;
 	public int ownedShares;
-	public float sharePrice;
+	public double sharePrice;
 	public StructNode next;
 
-	public StructNode(String companyName, int numberOfShares, float price)
+	public StructNode(String companyName, int numberOfShares, double price)
 	{
 		company = companyName;
 		ownedShares = numberOfShares;

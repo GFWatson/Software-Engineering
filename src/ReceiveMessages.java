@@ -30,6 +30,7 @@ public class ReceiveMessages implements Runnable
 			while((inputText = in.readLine()) != null)
 			{
 					System.out.println("Client: " + clientSocket.getLocalSocketAddress() + " : " + inputText);
+				
 			}
 		}
 		catch(IOException e)

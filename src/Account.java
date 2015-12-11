@@ -4,27 +4,24 @@ public class Account
 {
 
 	String username;
-	String password;
-	String serverID;
 	double balance;
 	StructNode root;
 	StructNode current;
 	
 	
-	public Account (String name, String pass, String id)
+	public Account (String name, double bal)
 	{
 
-		String username;
-		String password;
-		String serverID;
-		float balance;
+		username = name;
+		balance = bal;
 		
 		root = new StructNode("root", 0, 0.0);
 		current = root;
 		
 	}
 	
-	public void add(String comp, int num, float price)
+	
+	public void add(String comp, int num, double price)
 	{
 		while(current.next != null)
 		{
@@ -35,10 +32,11 @@ public class Account
 		current.next = newNode;
 	}
 	
-	public void change(String comp, int owned, double price)
+	public void buy(String comp, int owned, double price)
 	{
 		boolean found = false;
 		current = root;
+		balance -= (owned * price);
 		while(current.next != null)
 		{
 			current = current.next;
@@ -57,5 +55,39 @@ public class Account
 		
 	}
 	
+	public void sell(String comp, int owned, double pri)
+	{
+		boolean found = false;
+		current = root;
+		while(current.next != null)
+		{
+			current = current.next;
+			if(current.company.equals(comp))
+			{
+				found = true;
+				current.ownedShares += owned;
+				balance += pri;
+			}
+		}
+		
+		if (found == false)
+		{
+			System.out.println("You do not own any of this stock!");
+		}
+		
+	}
 	
+	public void display()
+	{
+		System.out.println("Username: " + username);
+		System.out.println("Balance: " + balance);
+		current = root;
+		while(current.next != null)
+		{
+			current = current.next;
+			System.out.println("Company: " + current.company);
+			System.out.println("You own: " + current.ownedShares);
+			System.out.println("Price: " + current.sharePrice);
+		}
+	}
 }
