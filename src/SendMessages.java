@@ -13,6 +13,7 @@ public class SendMessages implements Runnable{
 		clientSocket = aSocket;
 		try
 		{
+			System.out.println("userInput = " + userInput);
 			out = new PrintWriter(clientSocket.getOutputStream(), true);
 		}
 		catch (IOException e)

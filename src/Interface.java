@@ -10,6 +10,11 @@ public class Interface implements Runnable{
 	String secretID;
 	ReceiveMessages rM;
 	SendMessages sM;
+	String ActualID;
+	String companyName;
+	String numberOfSharesB;
+	String numberOfSharesS;
+
 	
 	public Interface(ReceiveMessages myRM, SendMessages mySM)
 	{
@@ -20,7 +25,6 @@ public class Interface implements Runnable{
 	public void run()
 	{
 		getInput();
-		
 	}
 	
 	private void getInput()
@@ -53,12 +57,14 @@ public class Interface implements Runnable{
 			{
 				sell(stdIn);
 			}
+			
+			else if(userIn.equals("DISP"))
+			{
+				disp(stdIn);
+			}
 			//will become a switch case for all actions
 			
-			
-		
 			}
-			
 		}
 		catch(IOException e)
 		{
@@ -82,22 +88,25 @@ public class Interface implements Runnable{
 		catch(IOException e)
 		{
 			System.out.println("There has been an error: " + e);
-
 		}
 		
 		sM.setText("REGI");
 		System.out.println("should have sent regi!");
 		
+		
 		secretID = rM.getText();
+		
 		sM.setText("");
+		rM.getText();		
+		 ActualID = rM.getrID().substring(Math.max(rM.getrID().length() - 5, 0));
+		System.out.println("Your Secret ID is: " + ActualID);
 
 		loggedIn = true;
-
+		
 	}
 	
 	private void buy(BufferedReader stdIn)
 	{
-		String companyName = "";
 		try
 		{
 		System.out.println("Enter the company name: ");
@@ -118,25 +127,28 @@ public class Interface implements Runnable{
 		}
 		//the other companies need adding
 		//and then this needs adding to the sell function
-		String numberOfShares = "";
 		try
 		{
 		System.out.println("Enter number of shares: ");
-		numberOfShares = stdIn.readLine().toUpperCase();
-		//shareNumber = Integer.valueOf(inputSecretID);
+		numberOfSharesB = stdIn.readLine().toUpperCase();
 		}
 		catch(IOException e)
 		{
 			System.out.println("There has been an error: " + e);
 		}
 		
-		sM.setText("BUY:" + companyName + ":" + numberOfShares + ":" + secretID);
+		sM.setText("BUY:" + companyName + ":" + numberOfSharesB + ":" + ActualID);
 		System.out.println(rM.getText());
+		
+		if(rM.getText().toString() != "")
+		{
+		String purchasePrice = rM.getText().toString();
+		System.out.println("You purchased at this rate: " + purchasePrice);
+		}
 	}
 	
 	private void sell(BufferedReader stdIn)
 	{
-		String companyName = "";
 		try
 		{
 		System.out.println("Enter the company name: ");
@@ -157,20 +169,26 @@ public class Interface implements Runnable{
 		}
 		//the other companies need adding
 		//and then this needs adding to the sell function
-		String numberOfShares = "";
 		try
 		{
 		System.out.println("Enter number of shares: ");
-		numberOfShares = stdIn.readLine().toUpperCase();
+		numberOfSharesS = stdIn.readLine().toUpperCase();
 		}
 		catch(IOException e)
 		{
 			System.out.println("There has been an error: " + e);
 		}
 		
-		sM.setText("SELL:" + companyName + ":" + numberOfShares + ":" + secretID);
+		sM.setText("SELL:" + companyName + ":" + numberOfSharesS + ":" + ActualID);
 		System.out.println(rM.getText());
-
+	}
+	
+	private void disp(BufferedReader stdIn)
+	{
+		System.out.println("ID: " + ActualID);
+		System.out.println("Company: " + companyName);
+		System.out.println("Shares bought: " + numberOfSharesB);
+		System.out.println("Shares sold: " + numberOfSharesS);
 	}
 }
 	

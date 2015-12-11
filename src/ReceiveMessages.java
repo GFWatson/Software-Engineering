@@ -7,6 +7,7 @@ public class ReceiveMessages implements Runnable
 	Socket clientSocket;
 	BufferedReader in;
 	public String inputText;
+	public static String sID;
 	
 	public ReceiveMessages(Socket aSocket)
 	{
@@ -28,7 +29,7 @@ public class ReceiveMessages implements Runnable
 			 
 			while((inputText = in.readLine()) != null)
 			{
-				System.out.println("Client: " + clientSocket.getLocalSocketAddress() + " : " + inputText);	
+					System.out.println("Client: " + clientSocket.getLocalSocketAddress() + " : " + inputText);
 			}
 		}
 		catch(IOException e)
@@ -41,13 +42,19 @@ public class ReceiveMessages implements Runnable
 	{
 		while(true)
 		{
-			receiveMessage();
-			
+			receiveMessage();	
 		}
 	}
 	
 	public String getText()
 	{
 		return inputText;
+	}
+	
+	
+	public String getrID()
+	{
+		sID = clientSocket.getLocalSocketAddress().toString();
+		return sID;
 	}
 }

@@ -17,14 +17,14 @@ public class Account
 		String username;
 		String password;
 		String serverID;
-		double balance;
+		float balance;
 		
 		root = new StructNode("root", 0, 0.0);
 		current = root;
 		
 	}
 	
-	public void add(String comp, int num, double price)
+	public void add(String comp, int num, float price)
 	{
 		while(current.next != null)
 		{
