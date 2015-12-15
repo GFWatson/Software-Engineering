@@ -45,13 +45,7 @@ public class ReceiveMessages implements Runnable
 		{
 			receiveMessage();	
 		}
-	}
-	
-	public String getText()
-	{
-		return inputText;
-	}
-	
+	}	
 	
 	public String getrID()
 	{

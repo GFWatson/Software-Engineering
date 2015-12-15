@@ -44,9 +44,9 @@ public class Interface implements Runnable{
 			else
 			{
 				System.out.println("What would you like to do?");
+				userIn = stdIn.readLine().toUpperCase();
 			}
 			
-			userIn = stdIn.readLine().toUpperCase();
 			
 			if(userIn.equals("BUY"))
 			{
@@ -58,11 +58,14 @@ public class Interface implements Runnable{
 				sell(stdIn);
 			}
 			
-			else if(userIn.equals("DISP"))
+			else if(userIn.equals("DISPA"))
 			{
 				disp(stdIn);
 			}
-			//will become a switch case for all actions
+			else if (userIn.equals("DISPS"))
+			{
+				disps(stdIn);
+			}
 			
 			}
 		}
@@ -81,7 +84,7 @@ public class Interface implements Runnable{
 		System.out.println("You must create an account.");
 		System.out.println("Enter your Name:");
 		accountName = reader.readLine().toUpperCase();
-		System.out.println("You have a balance of £5000");
+		System.out.println("You have a balance of £10000.00");
 		}
 		catch(IOException e)
 		{
@@ -89,11 +92,9 @@ public class Interface implements Runnable{
 		}
 		
 		sM.setText("REGI");				
-		sM.setText("");
-		rM.getText();		
-		 ActualID = rM.getrID().substring(Math.max(rM.getrID().length() - 5, 0));
+		ActualID = rM.getrID().substring(Math.max(rM.getrID().length() - 5, 0));
 		System.out.println("Your Secret ID is: " + ActualID);
-		myAccount = new Account(accountName, 5000.0);
+		myAccount = new Account(accountName, 10000.0);
 		loggedIn = true;
 		
 	}
@@ -110,16 +111,6 @@ public class Interface implements Runnable{
 			System.out.println("There has been an error: " + e);
 		}
 		
-		if(companyName.equals("MICROSOFT"))
-		{
-			companyName = "Microsoft";
-		}
-		else if(companyName.equals("GOOGLE"))
-		{
-			companyName = "Google";
-		}
-		//the other companies need adding
-		//and then this needs adding to the sell function
 		try
 		{
 		System.out.println("Enter number of shares: ");
@@ -164,16 +155,6 @@ public class Interface implements Runnable{
 			System.out.println("There has been an error: " + e);
 		}
 		
-		if(companyName == "MICROSOFT")
-		{
-			companyName = "Microsoft";
-		}
-		else if(companyName == "GOOGLE")
-		{
-			companyName = "Google";
-		}
-		//the other companies need adding
-		//and then this needs adding to the sell function
 		try
 		{
 		System.out.println("Enter number of shares: ");
@@ -210,10 +191,11 @@ public class Interface implements Runnable{
 		myAccount.display();
 	}
 	
-	public void setOut(String somet)
+	private void disps(BufferedReader stdIn)
 	{
-		serverOut = somet;
+		sM.setText("DISP");
 	}
+	
 }
 	
 
