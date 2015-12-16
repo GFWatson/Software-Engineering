@@ -9,6 +9,8 @@ public class ReceiveMessages implements Runnable
 	public String inputText;
 	public static String sID;
 	
+	//constructor
+	//creates buffered reader to receive messages from server
 	public ReceiveMessages(Socket aSocket)
 	{
 		clientSocket = aSocket;
@@ -21,16 +23,14 @@ public class ReceiveMessages implements Runnable
 			e.printStackTrace();
 		}
 	}	
-	
+	//prints messages from server to console
 	public void receiveMessage()
 	{
 		try
 		{
-			 
 			while((inputText = in.readLine()) != null)
 			{
-					System.out.println("Client: " + clientSocket.getLocalSocketAddress() + " : " + inputText);
-				
+					System.out.println(inputText);
 			}
 		}
 		catch(IOException e)
@@ -38,7 +38,7 @@ public class ReceiveMessages implements Runnable
 			System.out.println("An error happened: " + e);
 		}	
 	}
-
+	//run method for thread
 	public void run()
 	{
 		while(true)
@@ -46,7 +46,7 @@ public class ReceiveMessages implements Runnable
 			receiveMessage();	
 		}
 	}	
-	
+	//get server id
 	public String getrID()
 	{
 		sID = clientSocket.getLocalSocketAddress().toString();

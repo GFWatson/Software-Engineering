@@ -7,13 +7,13 @@ public class SendMessages implements Runnable{
 	PrintWriter out;
 	public String userInput ="1";
 	
-	
+	//constructor
+	//creates print writer that will send messages from the server
 	public SendMessages(Socket aSocket)
 	{
 		clientSocket = aSocket;
 		try
 		{
-			System.out.println("userInput = " + userInput);
 			out = new PrintWriter(clientSocket.getOutputStream(), true);
 		}
 		catch (IOException e)
@@ -22,19 +22,19 @@ public class SendMessages implements Runnable{
 		}
 
 	}
-	
+	//prints messages to server
 	public void sendMessage()
 	{	
 		out.println(userInput);
 	}
-	
+	//run method for thread
 	public void run()
 	{
 
 		sendMessage();
 
 	}
-	
+	//set message to send to server
 	public void setText(String newInput)
 	{
 		userInput = newInput;

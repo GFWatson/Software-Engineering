@@ -8,19 +8,17 @@ public class Account
 	StructNode root;
 	StructNode current;
 	
-	
+	//constructor
+	//creates root and current nodes for traversing
 	public Account (String name, double bal)
 	{
-
 		username = name;
 		balance = bal;
-		
 		root = new StructNode("root", 0, 0.0);
 		current = root;
-		
 	}
 	
-	
+	//adds node to list
 	public void add(String comp, int num, double price)
 	{
 		while(current.next != null)
@@ -32,6 +30,9 @@ public class Account
 		current.next = newNode;
 	}
 	
+	//checks to see if some company shares are already owned
+	//if so, adds to them
+	//if not, creates new node
 	public void buy(String comp, int owned, double price)
 	{
 		boolean found = false;
@@ -55,6 +56,8 @@ public class Account
 		
 	}
 	
+	//finds shares and subtracts number sold
+	//if none are owned, prints error
 	public void sell(String comp, int owned, double pri)
 	{
 		boolean found = false;
@@ -77,6 +80,7 @@ public class Account
 		
 	}
 	
+	//loops through list and prints shares to console
 	public void display()
 	{
 		System.out.println("Username: " + username);

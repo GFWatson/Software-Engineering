@@ -15,25 +15,26 @@ public class Interface implements Runnable{
 	String numberOfShares;
 	Account myAccount;
 
-	
+	//constructor
 	public Interface(ReceiveMessages myRM, SendMessages mySM)
 	{
 		rM = myRM;
 		sM = mySM;
 	}
-	
+	//run method for thread
 	public void run()
 	{
 		getInput();
 	}
 	
+	//get user input and process
 	private void getInput()
 	{
 		try
 		{
 			BufferedReader stdIn = new BufferedReader(new InputStreamReader(System.in));
 			
-			
+			//log in when program starts
 			while(true)
 			{
 			if(loggedIn == false)
@@ -47,7 +48,7 @@ public class Interface implements Runnable{
 				userIn = stdIn.readLine().toUpperCase();
 			}
 			
-			
+			//process commands
 			if(userIn.equals("BUY"))
 			{
 				buy(stdIn);
@@ -75,6 +76,7 @@ public class Interface implements Runnable{
 		}
 	}
 	
+	//create account
 	private void regi(BufferedReader reader)
 	{
 		String accountName = "";
@@ -90,7 +92,7 @@ public class Interface implements Runnable{
 		{
 			System.out.println("There has been an error: " + e);
 		}
-		
+		//register with server
 		sM.setText("REGI");				
 		ActualID = rM.getrID().substring(Math.max(rM.getrID().length() - 5, 0));
 		System.out.println("Your Secret ID is: " + ActualID);
@@ -99,8 +101,10 @@ public class Interface implements Runnable{
 		
 	}
 	
+	//buy shares
 	private void buy(BufferedReader stdIn)
 	{
+		//get transaction details
 		try
 		{
 		System.out.println("Enter the company name: ");
@@ -121,7 +125,10 @@ public class Interface implements Runnable{
 			System.out.println("There has been an error: " + e);
 		}
 		
+		//send buy command to server
 		sM.setText("BUY:" + companyName + ":" + numberOfShares + ":" + ActualID);
+		
+		//user input of details sent back
 		System.out.println("Please enter \"Y\" if transaction was successful:");
 		
 		try
@@ -133,6 +140,7 @@ public class Interface implements Runnable{
 				String price = stdIn.readLine().toUpperCase();
 				int num = Integer.parseInt(numberOfShares);
 				double pri = Double.parseDouble(price);
+				//changes to account
 				myAccount.buy(companyName, num, pri);
 			}
 		}
@@ -143,8 +151,10 @@ public class Interface implements Runnable{
 		
 	}
 	
+	//sell shares
 	private void sell(BufferedReader stdIn)
 	{
+		//get transaction details
 		try
 		{
 		System.out.println("Enter the company name: ");
@@ -165,7 +175,10 @@ public class Interface implements Runnable{
 			System.out.println("There has been an error: " + e);
 		}
 		
+		//send sell command to server
 		sM.setText("SELL:" + companyName + ":" + numberOfShares + ":" + ActualID);
+		
+		//user input of details sent back
 		System.out.println("Please enter \"Y\" if transaction was successful:");
 		
 		try
@@ -177,6 +190,7 @@ public class Interface implements Runnable{
 				String price = stdIn.readLine().toUpperCase();
 				int num = Integer.parseInt(numberOfShares);
 				double pri = Double.parseDouble(price);
+				//changes to account
 				myAccount.sell(companyName, num, pri);
 			}
 		}
@@ -185,12 +199,12 @@ public class Interface implements Runnable{
 			e.printStackTrace();
 		}
 	}
-	
+	//display account details
 	private void disp(BufferedReader stdIn)
 	{
 		myAccount.display();
 	}
-	
+	//display current server shares
 	private void disps(BufferedReader stdIn)
 	{
 		sM.setText("DISP");
